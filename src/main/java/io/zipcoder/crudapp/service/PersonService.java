@@ -13,15 +13,13 @@ public class PersonService {
         this.repository = repository;
     }
 
-    public Iterable<Person> index() {
-        return repository.findAll();
-    }
-
-    public Person createPerson(Person baker) {
-        return repository.save(baker);
-    }
-
     public Person getPerson(Long id) { return repository.findOne(id); }
+
+    public Iterable<Person> getPersonList() { return repository.findAll(); }
+
+    public Person createPerson(Person person) {
+        return repository.save(person);
+    }
 
     public Person updatePerson(Long id, Person newPersonData) {
         Person originalPerson = repository.findOne(id);
