@@ -15,9 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.Optional;
 
-import static org.junit.Assert.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -37,7 +35,7 @@ public class PersonControllerTest {
                 .given(repository.findOne(givenId))
                 .willReturn(new Person("Han", "Lin"));
 
-        String expectedContent = "{\"id\":null,\"firstName\":\"Han\",\"lastName\":Lin\"}";
+        String expectedContent = "{\"id\":null,\"firstName\":\"Han\",\"lastName\":\"Lin\"}";
         this.mvc.perform(MockMvcRequestBuilders
                 .get("/people/" + givenId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -51,7 +49,7 @@ public class PersonControllerTest {
                 .given(repository.save(person))
                 .willReturn(person);
 
-        String expectedContent="{\"id\":null,\"firstName\":\"Han\",\"lastName\":Lin\"}";
+        String expectedContent="{\"id\":null,\"firstName\":\"Han\",\"lastName\":\"Lin\"}";
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/people/")
                 .content(expectedContent)
