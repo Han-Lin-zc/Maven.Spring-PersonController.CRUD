@@ -18,6 +18,10 @@ public class Person {
     public Person() {
     }
 
+    public Person(String firstName, String lastName) {
+        this(null, firstName, lastName);
+    }
+
     public Person(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
