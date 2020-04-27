@@ -2,6 +2,7 @@ package io.zipcoder.crudapp.controller;
 
 import io.zipcoder.crudapp.models.Person;
 import io.zipcoder.crudapp.repositories.PersonRepository;
+import io.zipcoder.crudapp.service.PersonService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -15,6 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -24,6 +30,9 @@ public class PersonControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private PersonService personService;
 
     @MockBean
     private PersonRepository repository;
@@ -40,6 +49,17 @@ public class PersonControllerTest {
                 .get("/people/" + givenId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(expectedContent));
+    }
+
+    @Test
+    public void testShowCommentNotFound() throws Exception {
+
+        doReturn(Optional.empty()).when(personService).getPerson(1L);
+
+        Person testComment = personService.getPerson(1L);
+
+        mvc.perform(get("/people/{id}", 2))
+                .andExpect(status().isNotFound());
     }
 
     @Test
